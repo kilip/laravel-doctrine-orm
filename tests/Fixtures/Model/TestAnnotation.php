@@ -44,6 +44,7 @@ class TestAnnotation
 
     /**
      * @ORM\OneToOne(targetEntity="Tests\Kilip\LaravelDoctrine\ORM\Fixtures\Contracts\UserInterface")
+     *
      * @var UserInterface
      */
     protected $user;

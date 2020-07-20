@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of the Omed project.
+ *
+ * (c) Anthonius Munthi <https://itstoni.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
 
 namespace Tests\Kilip\LaravelDoctrine\ORM\Fixtures\Model;
 
@@ -7,18 +17,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Tests\Kilip\LaravelDoctrine\ORM\Fixtures\Contracts\UserInterface;
 
 /**
- * Class User
+ * Class User.
  *
- * @ORM\Entity()
+ * @ORM\Entity
  * @ORM\Table(name="test_user")
- *
- * @package Tests\Kilip\LaravelDoctrine\ORM\Fixtures\Model
  */
 class User implements UserInterface
 {
     /**
      * @ORM\Column(type="string")
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
      *
      * @var string
@@ -57,11 +65,13 @@ class User implements UserInterface
 
     /**
      * @param string $username
+     *
      * @return User
      */
-    public function setUsername(string $username): User
+    public function setUsername(string $username): self
     {
         $this->username = $username;
+
         return $this;
     }
 
@@ -75,11 +85,13 @@ class User implements UserInterface
 
     /**
      * @param string $password
+     *
      * @return User
      */
-    public function setPassword(string $password): User
+    public function setPassword(string $password): self
     {
         $this->password = $password;
+
         return $this;
     }
 }

@@ -30,6 +30,9 @@
             "Tests\\Kilip\\LaravelDoctrine\\ORM\\": "./tests"
         }
     },
+    "suggest": {
+        "symfony/yaml": "To use doctrine yaml config"
+    },
     "require": {
         "php": ">=7.2",
         "doctrine/orm": "^2.7.3",
@@ -44,6 +47,7 @@
         "phpstan/phpstan": "^0.12.30",
         "phpstan/phpstan-doctrine": "^0.12.16",
         "phpstan/phpstan-phpunit": "^0.12.11",
-        "phpunit/phpunit": "^8.5.8"
+        "phpunit/phpunit": "^8.5.8",
+        "symfony/yaml": "^5.1"
     }
 }

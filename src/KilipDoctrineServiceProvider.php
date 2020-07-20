@@ -1,13 +1,20 @@
 <?php
 
+/*
+ * This file is part of the Omed project.
+ *
+ * (c) Anthonius Munthi <https://itstoni.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
 
 namespace Kilip\LaravelDoctrine\ORM;
 
-
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use LaravelDoctrine\ORM\BootChain;
-use LaravelDoctrine\ORM\EntityManagerFactory as BaseEntityManagerFactory;
 use LaravelDoctrine\ORM\IlluminateRegistry;
 
 class KilipDoctrineServiceProvider extends ServiceProvider
@@ -15,7 +22,7 @@ class KilipDoctrineServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->singleton(MetadataConfigurator::class, MetadataConfigurator::class);
-        BootChain::add([$this,'handleOnDoctrineBoot']);
+        BootChain::add([$this, 'handleOnDoctrineBoot']);
     }
 
     public function register()
@@ -26,9 +33,9 @@ class KilipDoctrineServiceProvider extends ServiceProvider
     {
         $configurator = $this->app->make(MetadataConfigurator::class);
 
-        foreach($registry->getManagerNames() as $managerName){
+        foreach ($registry->getManagerNames() as $managerName) {
             $manager = $registry->getManager($managerName);
-            $configurator->configure($managerName,$manager);
+            $configurator->configure($managerName, $manager);
         }
     }
 }

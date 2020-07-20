@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Kilip\LaravelDoctrine\ORM\Fixtures\XML;
+namespace Tests\Kilip\LaravelDoctrine\ORM\Fixtures\PHP;
 
 use Tests\Kilip\LaravelDoctrine\ORM\Fixtures\ModelClassTrait;
 
-class TestXML
+class TestPHP
 {
     use ModelClassTrait;
 }

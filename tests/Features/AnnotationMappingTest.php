@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Tests\Kilip\LaravelDoctrine\ORM\Features;
 
-use Tests\Kilip\LaravelDoctrine\ORM\Fixtures\XML\TestXML;
+use Tests\Kilip\LaravelDoctrine\ORM\Fixtures\Model\TestAnnotation;
 use Tests\Kilip\LaravelDoctrine\ORM\TestCase;
 
-class XMLMappingTest extends TestCase
+class AnnotationMappingTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -28,14 +28,15 @@ class XMLMappingTest extends TestCase
     {
         parent::getEnvironmentSetUp($app);
 
-        $app['config']->set('doctrine.managers.default.mappings', static::$xmlConfig);
+        $app['config']->set('doctrine.managers.default.mappings', static::$annotationConfig);
     }
 
     public function testLoad()
     {
-        $object = new TestXML();
+        $object = new TestAnnotation();
         $object->setName('test');
-        $em = $this->app->make('registry')->getManager();
+
+        $em = $this->app->make('em');
         $em->persist($object);
         $em->flush();
 

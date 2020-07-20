@@ -1,14 +1,26 @@
 <?php
 
+/*
+ * This file is part of the Omed project.
+ *
+ * (c) Anthonius Munthi <https://itstoni.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
 namespace Tests\Kilip\LaravelDoctrine\ORM;
 
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
+use Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver;
+use Doctrine\Persistence\Mapping\Driver\PHPDriver;
 use Illuminate\Contracts\Config\Repository;
 use Kilip\LaravelDoctrine\ORM\MetadataConfigurator;
 use LaravelDoctrine\ORM\Extensions\MappingDriverChain;
-use PHPUnit\Framework\TestCase;
 
 class MetadataConfiguratorTest extends TestCase
 {
@@ -31,22 +43,6 @@ class MetadataConfiguratorTest extends TestCase
      * @var Configuration|\PHPUnit\Framework\MockObject\MockObject
      */
     private $configuration;
-
-    /**
-     * @var array
-     */
-    private $annotationConfig = [
-        __NAMESPACE__.'\\Fixtures\\Model' => [
-            'dir' => __DIR__.'/Fixtures/Model'
-        ],
-    ];
-
-    private $xmlConfig = [
-        __NAMESPACE__.'\\Fixtures\\XML' => [
-            'dir' => __DIR__.'/Fixtures/Resources/config/xml',
-            'type' => 'xml'
-        ],
-    ];
 
     protected function setUp(): void
     {
@@ -71,20 +67,19 @@ class MetadataConfiguratorTest extends TestCase
         $em = $this->em;
         $repository = $this->repository;
         $chainDriver = $this->chainDriver;
-        $settings = $this->annotationConfig;
+        $settings = static::$annotationConfig;
 
         $repository->expects($this->once())
             ->method('get')
             ->with('doctrine.managers.default.mappings')
-            ->willReturn($settings)
-        ;
+            ->willReturn($settings);
 
         $chainDriver->expects($this->once())
             ->method('addPaths')
             ->with([__DIR__.'/Fixtures/Model']);
 
         $configurator = new MetadataConfigurator($repository);
-        $configurator->configure('default',$em);
+        $configurator->configure('default', $em);
     }
 
     public function testConfigureXML()
@@ -92,13 +87,12 @@ class MetadataConfiguratorTest extends TestCase
         $em = $this->em;
         $repository = $this->repository;
         $chainDriver = $this->chainDriver;
-        $settings = $this->xmlConfig;
+        $settings = static::$xmlConfig;
 
         $repository->expects($this->once())
             ->method('get')
             ->with('doctrine.managers.default.mappings')
-            ->willReturn($settings)
-        ;
+            ->willReturn($settings);
 
         $chainDriver->expects($this->once())
             ->method('addDriver')
@@ -107,6 +101,73 @@ class MetadataConfiguratorTest extends TestCase
                 __NAMESPACE__.'\\Fixtures\\XML'
             );
 
+        $configurator = new MetadataConfigurator($repository);
+        $configurator->configure('default', $em);
+    }
+
+    public function testConfigureYml()
+    {
+        $em = $this->em;
+        $repository = $this->repository;
+        $chainDriver = $this->chainDriver;
+        $settings = static::$ymlConfig;
+
+        $repository->expects($this->once())
+            ->method('get')
+            ->with('doctrine.managers.default.mappings')
+            ->willReturn($settings);
+
+        $chainDriver->expects($this->once())
+            ->method('addDriver')
+            ->with(
+                $this->isInstanceOf(SimplifiedYamlDriver::class),
+                __NAMESPACE__.'\\Fixtures\\YML'
+            );
+
+        $configurator = new MetadataConfigurator($repository);
+        $configurator->configure('default', $em);
+    }
+
+    public function testConfigurePHP()
+    {
+        $em = $this->em;
+        $repository = $this->repository;
+        $chainDriver = $this->chainDriver;
+        $settings = static::$phpConfig;
+
+        $repository->expects($this->once())
+            ->method('get')
+            ->with('doctrine.managers.default.mappings')
+            ->willReturn($settings);
+
+        $chainDriver->expects($this->once())
+            ->method('addDriver')
+            ->with(
+                $this->isInstanceOf(PHPDriver::class),
+                __NAMESPACE__.'\\Fixtures\\PHP'
+            );
+
+        $configurator = new MetadataConfigurator($repository);
+        $configurator->configure('default', $em);
+    }
+
+    public function testWithInvalidType()
+    {
+        $em = $this->em;
+        $repository = $this->repository;
+        $settings = [
+            __NAMESPACE__.'\\Fixtures\\PHP' => [
+                'dir' => __DIR__.'/Fixtures/Resources/config',
+                'type' => 'foo',
+            ],
+        ];
+
+        $repository->expects($this->once())
+            ->method('get')
+            ->with('doctrine.managers.default.mappings')
+            ->willReturn($settings);
+
+        $this->expectException(\InvalidArgumentException::class);
         $configurator = new MetadataConfigurator($repository);
         $configurator->configure('default', $em);
     }

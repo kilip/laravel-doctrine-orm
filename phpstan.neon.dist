@@ -8,10 +8,5 @@ parameters:
 			- fail
 	ignoreErrors:
 	    - '#PHPDoc tag @var does not match assigned variable#'
-	    - '#MappingDriver::addPaths()#'
-	    - '#MappingDriver::addDriver()#'
-	    #- '#in PHPDoc tag @var does not exist#'
-	    #- '#Authenticatable::withAccessToken#'
-	    #- '#createTransientToken\(\) should return#'
-	    #- '#Application::refresh#'
-	    #- '#Factory::createUserProvider#'
+	    - '#MappingDriver::addPaths#'
+	    - '#MappingDriver::addDriver#'

@@ -27,8 +27,6 @@ class AnnotationMappingTest extends TestCase
     protected function getEnvironmentSetUp($app)
     {
         parent::getEnvironmentSetUp($app);
-
-        $app['config']->set('doctrine.managers.default.mappings', static::$annotationConfig);
     }
 
     public function testLoad()

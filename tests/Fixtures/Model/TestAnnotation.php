@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Tests\Kilip\LaravelDoctrine\ORM\Fixtures\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Tests\Kilip\LaravelDoctrine\ORM\Fixtures\Contracts\UserInterface;
 use Tests\Kilip\LaravelDoctrine\ORM\Fixtures\ModelClassTrait;
 
 /**
@@ -40,4 +41,10 @@ class TestAnnotation
      * @var string
      */
     protected $name;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Tests\Kilip\LaravelDoctrine\ORM\Fixtures\Contracts\UserInterface")
+     * @var UserInterface
+     */
+    protected $user;
 }

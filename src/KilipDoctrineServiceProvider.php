@@ -29,8 +29,8 @@ class KilipDoctrineServiceProvider extends ServiceProvider
     {
         config([
             'doctrine.extensions' => array_merge(
-                [TargetEntityResolver::class],config('doctrine.extensions',[])
-            )
+                [TargetEntityResolver::class], config('doctrine.extensions', [])
+            ),
         ]);
     }
 

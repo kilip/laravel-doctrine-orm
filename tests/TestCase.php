@@ -90,9 +90,5 @@ class TestCase extends OrchestraTestCase
         $app['config']->set('doctrine.resolve_target_entities', [
             UserInterface::class => User::class,
         ]);
-        $app['config']->set('doctrine.extensions', [
-            TargetEntityResolver::class,
-            TimestampableExtension::class,
-        ]);
     }
 }

@@ -43,7 +43,7 @@ class MetadataConfigurator
         $config = $this->repository;
         $chainDriver = $manager->getConfiguration()->getMetadataDriverImpl();
         $configKey = 'doctrine.managers.'.$name.'.mappings';
-        $settings = $config->get($configKey,[]);
+        $settings = $config->get($configKey, []);
 
         foreach ($settings as $namespace => $setting) {
             $type = $setting['type'] ?? 'annotation';

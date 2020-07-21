@@ -22,7 +22,7 @@ class KilipDoctrineServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes(
-            [__DIR__.'/../config/doctrine.php'=> config_path('doctrine.php')],
+            [__DIR__.'/../config/doctrine.php' => config_path('doctrine.php')],
             'config'
         );
         $this->app->singleton(MetadataConfigurator::class, MetadataConfigurator::class);

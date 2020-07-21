@@ -27,6 +27,11 @@ class KilipDoctrineServiceProvider extends ServiceProvider
 
     public function register()
     {
+        config([
+            'doctrine.extensions' => array_merge(
+                [TargetEntityResolver::class], config('doctrine.extensions', [])
+            ),
+        ]);
     }
 
     public function handleOnDoctrineBoot(IlluminateRegistry $registry)

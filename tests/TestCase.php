@@ -14,9 +14,7 @@ declare(strict_types=1);
 namespace Tests\Kilip\LaravelDoctrine\ORM;
 
 use Kilip\LaravelDoctrine\ORM\KilipDoctrineServiceProvider;
-use Kilip\LaravelDoctrine\ORM\TargetEntityResolver;
 use LaravelDoctrine\Extensions\GedmoExtensionsServiceProvider;
-use LaravelDoctrine\Extensions\Timestamps\TimestampableExtension;
 use LaravelDoctrine\ORM\DoctrineServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Tests\Kilip\LaravelDoctrine\ORM\Fixtures\Contracts\UserInterface;
@@ -89,10 +87,6 @@ class TestCase extends OrchestraTestCase
         $app['config']->set('doctrine.managers.default.mappings', $config);
         $app['config']->set('doctrine.resolve_target_entities', [
             UserInterface::class => User::class,
-        ]);
-        $app['config']->set('doctrine.extensions', [
-            TargetEntityResolver::class,
-            TimestampableExtension::class,
         ]);
     }
 }

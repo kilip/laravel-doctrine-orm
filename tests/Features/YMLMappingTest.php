@@ -13,15 +13,18 @@ declare(strict_types=1);
 
 namespace Tests\Kilip\LaravelDoctrine\ORM\Features;
 
+use Kilip\LaravelDoctrine\ORM\Testing\ORMTestTrait;
 use Tests\Kilip\LaravelDoctrine\ORM\Fixtures\YML\TestYML;
 use Tests\Kilip\LaravelDoctrine\ORM\TestCase;
 
 class YMLMappingTest extends TestCase
 {
+    use ORMTestTrait;
+
     protected function setUp(): void
     {
         parent::setUp();
-        $this->artisan('doctrine:schema:create');
+        $this->recreateDatabase();
     }
 
     protected function getEnvironmentSetUp($app)
@@ -36,9 +39,7 @@ class YMLMappingTest extends TestCase
         $object = new TestYML();
         $object->setName('test');
 
-        $em = $this->app->make('em');
-        $em->persist($object);
-        $em->flush();
+        $this->store($object);
 
         $this->assertNotNull($object->getId());
     }

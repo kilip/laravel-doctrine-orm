@@ -21,10 +21,6 @@ class KilipDoctrineServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->publishes(
-            [__DIR__.'/../config/doctrine.php' => config_path('doctrine.php')],
-            'config'
-        );
         $this->app->singleton(MetadataConfigurator::class, MetadataConfigurator::class);
         BootChain::add([$this, 'handleOnDoctrineBoot']);
     }
@@ -36,10 +32,9 @@ class KilipDoctrineServiceProvider extends ServiceProvider
                 [TargetEntityResolver::class], config('doctrine.extensions', [])
             ),
         ]);
-        $this->mergeConfigFrom(
-            __DIR__.'/../config/doctrine.php',
-            'doctrine'
-        );
+        config([
+            'doctrine.managers.default.mappings' => array_merge([],config('doctrine.managers.default.mappings'))
+        ]);
     }
 
     public function handleOnDoctrineBoot(IlluminateRegistry $registry)

@@ -33,7 +33,7 @@ class KilipDoctrineServiceProvider extends ServiceProvider
             ),
         ]);
         config([
-            'doctrine.managers.default.mappings' => array_merge([],config('doctrine.managers.default.mappings',[]))
+            'doctrine.managers.default.mappings' => array_merge([], config('doctrine.managers.default.mappings', [])),
         ]);
     }
 
